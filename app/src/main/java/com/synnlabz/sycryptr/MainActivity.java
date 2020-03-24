@@ -2,21 +2,20 @@ package com.synnlabz.sycryptr;
 
 import android.app.TaskStackBuilder;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.view.ActionMode;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
-import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,77 +29,57 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.synnlabz.sycryptr.Utils.PersonAdapter;
-import com.synnlabz.sycryptr.Utils.PersonDBHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-
 public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerItemClickListener {
+    private static final String TAG = "MainActivity";
+    private RecyclerView recyclerView;
+    private ArrayList<ContactsContract.CommonDataKinds.Note> notes;
+    private int chackedCount = 0;
     private FloatingActionButton fab;
     private SharedPreferences settings;
     public static final String THEME_Key = "app_theme";
     public static final String APP_PREFERENCES="notepad_settings";
     private int theme;
-    private RecyclerView mRecyclerView;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private PersonDBHelper dbHelper;
-    private PersonAdapter adapter;
-    private String filter = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         settings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         theme = settings.getInt(THEME_Key, R.style.AppTheme);
         setTheme(theme);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
-
-        //initialize the variables
-        mRecyclerView = (RecyclerView)findViewById(R.id.recyclerView);
-        mRecyclerView.setHasFixedSize(true);
-        // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
-        populaterecyclerView(filter);
 
         setupNavigation(savedInstanceState, toolbar);
         // init recyclerView
+        //recyclerView = findViewById(R.id.notes_list);
+        //recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // init fab Button
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: 13/05/2018  add new note
-                goToAddUserActivity();
+                Toast.makeText(getApplicationContext(),"Add Button is Selected",Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    private void populaterecyclerView(String filter){
-        dbHelper = new PersonDBHelper(this);
-        adapter = new PersonAdapter(dbHelper.peopleList(filter), this, mRecyclerView);
-        mRecyclerView.setAdapter(adapter);
-
-    }
-
     private void setupNavigation(Bundle savedInstanceState, Toolbar toolbar) {
-
         // Navigation menu items
         List<IDrawerItem> iDrawerItems = new ArrayList<>();
-
-        iDrawerItems.add(new PrimaryDrawerItem().withName("Home").withIcon(R.drawable.ic_home_black_24dp));
-        iDrawerItems.add(new PrimaryDrawerItem().withName("Notes").withIcon(R.drawable.ic_note_black_24dp));
-        iDrawerItems.add(new PrimaryDrawerItem().withName("Home").withIcon(R.drawable.ic_home_black_24dp));
-        iDrawerItems.add(new PrimaryDrawerItem().withName("Notes").withIcon(R.drawable.ic_note_black_24dp));
+        iDrawerItems.add(new PrimaryDrawerItem().withName("Recent").withIcon(R.drawable.cat_recent));
+        iDrawerItems.add(new PrimaryDrawerItem().withName("Social").withIcon(R.drawable.cat_social));
+        iDrawerItems.add(new PrimaryDrawerItem().withName("Website").withIcon(R.drawable.cat_website));
+        iDrawerItems.add(new PrimaryDrawerItem().withName("Cards").withIcon(R.drawable.cat_cards));
+        iDrawerItems.add(new PrimaryDrawerItem().withName("Device").withIcon(R.drawable.cat_device));
+        iDrawerItems.add(new PrimaryDrawerItem().withName("Other").withIcon(R.drawable.cat_mail));
 
         // sticky DrawItems ; footer menu items
 
@@ -109,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
         SwitchDrawerItem switchDrawerItem = new SwitchDrawerItem()
                 .withName("Dark Theme")
                 .withChecked(theme == R.style.AppTheme_Dark)
-                .withIcon(R.drawable.ic_dark_theme)
+                .withIcon(R.drawable.ic_menu_slideshow)
                 .withOnCheckedChangeListener(new OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(IDrawerItem drawerItem, CompoundButton buttonView, boolean isChecked) {
@@ -130,14 +109,14 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
                     }
                 });
 
-        stockyItems.add(new PrimaryDrawerItem().withName("Settings").withIcon(R.drawable.ic_settings_black_24dp));
+        stockyItems.add(new PrimaryDrawerItem().withName("Settings").withIcon(R.drawable.ic_settings));
         stockyItems.add(switchDrawerItem);
 
         // navigation menu header
         AccountHeader header = new AccountHeaderBuilder().withActivity(this)
                 .addProfiles(new ProfileDrawerItem()
-                        .withEmail("Mileperuma@gmail.com")
-                        .withName("Malith")
+                        .withEmail("SynnLabz@gmail.com")
+                        .withName("Malith Ileperuma")
                         .withIcon(R.mipmap.ic_launcher_round))
                 .withSavedInstance(savedInstanceState)
                 .withHeaderBackground(R.drawable.ic_launcher_background)
@@ -158,10 +137,36 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
 
     }
 
-    private void goToAddUserActivity(){
-        Intent intent = new Intent(MainActivity.this, AddRecordActivity.class);
-        startActivity(intent);
+    /*private void showEmptyView() {
+        if (notes.size() == 0) {
+            this.recyclerView.setVisibility(View.GONE);
+            findViewById(R.id.empty_notes_view).setVisibility(View.VISIBLE);
+
+        } else {
+            this.recyclerView.setVisibility(View.VISIBLE);
+            findViewById(R.id.empty_notes_view).setVisibility(View.GONE);
+        }
+    }*/
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
     @Override
     protected void onResume() {
@@ -170,7 +175,25 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
 
     @Override
     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+        if(position==1){
+            Toast.makeText(this, "Recent", Toast.LENGTH_SHORT).show();
+        }else if(position==2){
+            Toast.makeText(this, "Social", Toast.LENGTH_SHORT).show();
+        }else if(position==3){
+            Toast.makeText(this, "Website", Toast.LENGTH_SHORT).show();
+        }else if(position==4){
+            Toast.makeText(this, "Cards", Toast.LENGTH_SHORT).show();
+        }else if(position==5){
+            Toast.makeText(this, "Device", Toast.LENGTH_SHORT).show();
+        }else if(position==6){
+            Toast.makeText(this, "Other", Toast.LENGTH_SHORT).show();
+        }
         return false;
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
     }
 }
 
