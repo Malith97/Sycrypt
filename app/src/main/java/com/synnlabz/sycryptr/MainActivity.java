@@ -1,10 +1,12 @@
 package com.synnlabz.sycryptr;
 
+import android.app.ActionBar;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.ActionMode;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,17 +36,24 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.codetail.animation.SupportAnimator;
+import io.codetail.animation.ViewAnimationUtils;
+
 
 public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerItemClickListener {
     private static final String TAG = "MainActivity";
-    private RecyclerView recyclerView;
-    private ArrayList<ContactsContract.CommonDataKinds.Note> notes;
     private int chackedCount = 0;
     private FloatingActionButton fab;
     private SharedPreferences settings;
     public static final String THEME_Key = "app_theme";
     public static final String APP_PREFERENCES="notepad_settings";
     private int theme;
+
+    DatabaseHelper databaseHelper;
+    ActionBar actionBar;
+    private RecyclerView mRecyclerView;
+    private ArrayList<Model> arrayList;
+    private Adapter Adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,18 +68,96 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
 
         setupNavigation(savedInstanceState, toolbar);
         // init recyclerView
-        //recyclerView = findViewById(R.id.notes_list);
-        //recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView = findViewById(R.id.recyclerView);
+        databaseHelper = new DatabaseHelper(this);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        
+        showRecord();
 
         // init fab Button
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"Add Button is Selected",Toast.LENGTH_LONG).show();
+                final View reveal = findViewById(R.id.reveal_background);
+                int centerX = (fab.getLeft() + fab.getRight()) / 2;
+                int centerY = (fab.getTop() + fab.getBottom()) / 2;
+                int startRadius = 0;
+                // get the final radius for the clipping circle
+                int endRadius = Math.max(reveal.getWidth(), reveal.getHeight());
+                SupportAnimator anim = ViewAnimationUtils.createCircularReveal(reveal, centerX, centerY, startRadius, endRadius);
+
+                reveal.setVisibility(View.VISIBLE);
+                anim.start();
+
+                anim.addListener(new SupportAnimator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart() {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd() {
+                        Intent intent = new Intent(MainActivity.this, AddAccount.class);
+                        startActivity(intent);
+                        overridePendingTransition(0, 0);
+//                        reveal.setVisibility(View.INVISIBLE);
+                    }
+
+                    @Override
+                    public void onAnimationCancel() {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat() {
+
+                    }
+                });
+
             }
         });
     }
+
+    private void showRecord() {
+
+        Adapter adapter = new Adapter(MainActivity.this,databaseHelper.getAllData());
+        mRecyclerView.setAdapter(adapter);
+    }
+/*
+    private void initObjects() {
+        arrayList = new ArrayList<>();
+        Adapter = new Adapter(arrayList, this);
+
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setAdapter(Adapter);
+        databaseHelper = new DatabaseHelper(MainActivity.this);
+
+        getDataFromSQLite();
+
+    }
+
+    private void getDataFromSQLite() {
+        // AsyncTask is used that SQLite operation not blocks the UI Thread.
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                Adapter.clear();
+                Adapter.addAll(databaseHelper. getAllBeneficiary());
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                Adapter.notifyDataSetChanged();
+            }
+        }.execute();
+    }*/
 
     private void setupNavigation(Bundle savedInstanceState, Toolbar toolbar) {
         // Navigation menu items
@@ -171,6 +259,7 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
     @Override
     protected void onResume() {
         super.onResume();
+        showRecord();
     }
 
     @Override

@@ -5,6 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.provider.SyncStateContract;
+
+import java.util.ArrayList;
 
 class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -20,7 +23,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String table1 = "CREATE TABLE "+TABLE1+"('id' INTEGER PRIMARY KEY,'password' TEXT NOT NULL)";
-        String table2 = "CREATE TABLE "+TABLE2+"('id' INTEGER PRIMARY KEY,'ac_name' TEXT,'ac_username' TEXT,'ac_password' TEXT,'ac_weblink' TEXT)";
+        String table2 = "CREATE TABLE "+TABLE2+"('id' INTEGER PRIMARY KEY AUTOINCREMENT,'ac_name' TEXT,'ac_username' TEXT,'ac_password' TEXT,'ac_type' TEXT,'ac_weblink' TEXT,'ac_timestamp' TEXT)";
         db.execSQL(table1);
         db.execSQL(table2);
     }
@@ -42,17 +45,41 @@ class DatabaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public boolean insert(String accountname , String accountusername , String accountpassword , String accountweblink){
+    public long insertInfo(String accountname , String accountusername , String accountpassword){
+
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-
         ContentValues contentValues = new ContentValues();
-        contentValues.put("accountname",accountname);
-        contentValues.put("accountusername",accountusername);
-        contentValues.put("accountpassword",accountpassword);
-        contentValues.put("accountweblink",accountweblink);
 
-        sqLiteDatabase.insert(TABLE2,null,contentValues);
-        return true;
+        contentValues.put("ac_name", accountname);
+        contentValues.put("ac_username",accountusername);
+        contentValues.put("ac_password",accountpassword);
+
+        long id = sqLiteDatabase.insert(TABLE2,null,contentValues);
+        sqLiteDatabase.close();
+        return id;
+    }
+
+    public ArrayList<Model> getAllData(){  //String orderBy within brackets
+        ArrayList<Model> arrayList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM ITEMS";
+
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery(selectQuery,null);
+
+        if (cursor.moveToNext()){
+            do {
+                Model model = new Model(
+                        ""+cursor.getInt(cursor.getColumnIndex("id")),
+                        ""+cursor.getString(cursor.getColumnIndex("ac_name")),
+                        ""+cursor.getString(cursor.getColumnIndex("ac_username")),
+                        ""+cursor.getString(cursor.getColumnIndex("ac_password"))
+                );
+
+                arrayList.add(model);
+            }while (cursor.moveToNext());
+        }
+        sqLiteDatabase.close();
+        return arrayList;
     }
 
     public String checkpassword(String password){
