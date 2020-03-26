@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.SyncStateContract;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -23,7 +24,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String table1 = "CREATE TABLE "+TABLE1+"('id' INTEGER PRIMARY KEY,'password' TEXT NOT NULL)";
-        String table2 = "CREATE TABLE "+TABLE2+"('id' INTEGER PRIMARY KEY AUTOINCREMENT,'ac_name' TEXT,'ac_username' TEXT,'ac_password' TEXT,'ac_type' TEXT,'ac_weblink' TEXT,'ac_timestamp' TEXT)";
+        String table2 = "CREATE TABLE "+TABLE2+"('id' INTEGER PRIMARY KEY AUTOINCREMENT,'ac_name' TEXT,'ac_username' TEXT,'ac_password' TEXT,'ac_type' INTEGER,'ac_weblink' TEXT,'ac_timestamp' TEXT)";
         db.execSQL(table1);
         db.execSQL(table2);
     }
@@ -45,7 +46,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public long insertInfo(String accountname , String accountusername , String accountpassword){
+    public long insertInfo(String accountname , String accountusername , String accountpassword , int accounttype , String accountweb, String timestamp){
 
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -53,6 +54,9 @@ class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put("ac_name", accountname);
         contentValues.put("ac_username",accountusername);
         contentValues.put("ac_password",accountpassword);
+        contentValues.put("ac_type",accounttype);
+        contentValues.put("ac_weblink",accountweb);
+        contentValues.put("ac_timestamp",timestamp);
 
         long id = sqLiteDatabase.insert(TABLE2,null,contentValues);
         sqLiteDatabase.close();
@@ -61,30 +65,81 @@ class DatabaseHelper extends SQLiteOpenHelper {
 
     public ArrayList<Model> getAllData(){  //String orderBy within brackets
         ArrayList<Model> arrayList = new ArrayList<>();
-        String selectQuery = "SELECT * FROM ITEMS";
+        //String selectQuery = "SELECT * FROM ITEMS";
+        String selectQuery = "SELECT  * FROM " + TABLE2;
 
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery(selectQuery,null);
+        Model model;
 
-        if (cursor.moveToNext()){
+        if (cursor.moveToFirst()){
             do {
-                Model model = new Model(
-                        ""+cursor.getInt(cursor.getColumnIndex("id")),
-                        ""+cursor.getString(cursor.getColumnIndex("ac_name")),
-                        ""+cursor.getString(cursor.getColumnIndex("ac_username")),
-                        ""+cursor.getString(cursor.getColumnIndex("ac_password"))
-                );
+                model = new Model();
 
+                model.setId(cursor.getLong(cursor.getColumnIndex("id")));
+                model.setAccountname(cursor.getString(cursor.getColumnIndex("ac_name")));
+                model.setAccountusername(cursor.getString(cursor.getColumnIndex("ac_username")));
+                model.setAccountpassword(cursor.getString(cursor.getColumnIndex("ac_password")));
                 arrayList.add(model);
+
             }while (cursor.moveToNext());
         }
         sqLiteDatabase.close();
         return arrayList;
     }
 
+    public ArrayList<Model> getFilterData(int type){  //String orderBy within brackets
+        ArrayList<Model> arrayList = new ArrayList<>();
+        //String selectQuery = "SELECT * FROM ITEMS";
+        String selectQuery = "SELECT  * FROM " + TABLE2 + " WHERE ac_type="+type;
+
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery(selectQuery,null);
+        Model model;
+
+        if (cursor.moveToFirst()){
+            do {
+                model = new Model();
+
+                model.setId(cursor.getLong(cursor.getColumnIndex("id")));
+                model.setAccountname(cursor.getString(cursor.getColumnIndex("ac_name")));
+                model.setAccountusername(cursor.getString(cursor.getColumnIndex("ac_username")));
+                model.setAccountpassword(cursor.getString(cursor.getColumnIndex("ac_password")));
+                arrayList.add(model);
+
+            }while (cursor.moveToNext());
+        }
+        sqLiteDatabase.close();
+        return arrayList;
+    }
+
+    public boolean updatePassword(String password) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        sqLiteDatabase.execSQL("UPDATE ACCOUNT SET password ="+password+" WHERE id=1");
+        return true;
+    }
+
+    public Model getModel(long id){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        String query = "SELECT  * FROM " + TABLE2 + " WHERE id="+ id;
+        Cursor cursor = sqLiteDatabase.rawQuery(query, null);
+
+        Model receivedAccount = new Model();
+        if(cursor.getCount() > 0) {
+            cursor.moveToFirst();
+
+            receivedAccount.setAccountname(cursor.getString(cursor.getColumnIndex("ac_name")));
+            receivedAccount.setAccountusername(cursor.getString(cursor.getColumnIndex("ac_username")));
+            receivedAccount.setAccountpassword(cursor.getString(cursor.getColumnIndex("ac_password")));
+            receivedAccount.setAccountlink(cursor.getString(cursor.getColumnIndex("ac_weblink")));
+            receivedAccount.setUpdatetimestamp(cursor.getString(cursor.getColumnIndex("ac_timestamp")));
+        }
+        return receivedAccount;
+    }
+
     public String checkpassword(String password){
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("Select password from ACCOUNT where password=?",new String[]{password});
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("Select password from ACCOUNT where password=?",new String[]{password});
         String temp = null;
         if (cursor.getCount()>0){
             while (cursor.moveToNext()){
@@ -92,5 +147,18 @@ class DatabaseHelper extends SQLiteOpenHelper {
             }
         }
         return temp;
+    }
+
+    public void updateAccountRecord(long accountId, Context context, Model updateAccount) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        sqLiteDatabase.execSQL("UPDATE  "+TABLE2+" SET ac_name ='"+ updateAccount.getAccountname() + "', ac_username ='" + updateAccount.getAccountusername()+ "', ac_password ='"+ updateAccount.getAccountpassword() + "', ac_weblink ='"+ updateAccount.getAccountlink() + "', ac_type ='"+ updateAccount.getAccounttype() + "'  WHERE id='" + accountId + "'");
+        Toast.makeText(context, "Updated successfully.", Toast.LENGTH_SHORT).show();
+    }
+
+    public void deleteAccountRecord(long accountId, Context context) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        sqLiteDatabase.execSQL("DELETE FROM "+TABLE2+" WHERE id='"+accountId+"'");
+        Toast.makeText(context, "Deleted successfully.", Toast.LENGTH_SHORT).show();
+
     }
 }

@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
     public static final String THEME_Key = "app_theme";
     public static final String APP_PREFERENCES="notepad_settings";
     private int theme;
+    private String filter = "";
 
     DatabaseHelper databaseHelper;
     ActionBar actionBar;
@@ -60,8 +61,10 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
         settings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         theme = settings.getInt(THEME_Key, R.style.AppTheme);
         setTheme(theme);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
@@ -69,10 +72,10 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
         setupNavigation(savedInstanceState, toolbar);
         // init recyclerView
         mRecyclerView = findViewById(R.id.recyclerView);
-        databaseHelper = new DatabaseHelper(this);
+
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        
-        showRecord();
+
+        showAllRecord();
 
         // init fab Button
         fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -119,45 +122,19 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
         });
     }
 
-    private void showRecord() {
-
-        Adapter adapter = new Adapter(MainActivity.this,databaseHelper.getAllData());
+    private void showAllRecord() {
+        databaseHelper = new DatabaseHelper(this);
+        Adapter adapter = new Adapter(MainActivity.this,databaseHelper.getAllData(),mRecyclerView);
         mRecyclerView.setAdapter(adapter);
     }
-/*
-    private void initObjects() {
-        arrayList = new ArrayList<>();
-        Adapter = new Adapter(arrayList, this);
 
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setAdapter(Adapter);
-        databaseHelper = new DatabaseHelper(MainActivity.this);
-
-        getDataFromSQLite();
-
+    private void showFilterData(int type){
+        databaseHelper = new DatabaseHelper(this);
+        Adapter adapter = new Adapter(MainActivity.this,databaseHelper.getFilterData(type),mRecyclerView);
+        mRecyclerView.setAdapter(adapter);
     }
 
-    private void getDataFromSQLite() {
-        // AsyncTask is used that SQLite operation not blocks the UI Thread.
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
-                Adapter.clear();
-                Adapter.addAll(databaseHelper. getAllBeneficiary());
 
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                Adapter.notifyDataSetChanged();
-            }
-        }.execute();
-    }*/
 
     private void setupNavigation(Bundle savedInstanceState, Toolbar toolbar) {
         // Navigation menu items
@@ -166,8 +143,9 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
         iDrawerItems.add(new PrimaryDrawerItem().withName("Social").withIcon(R.drawable.cat_social));
         iDrawerItems.add(new PrimaryDrawerItem().withName("Website").withIcon(R.drawable.cat_website));
         iDrawerItems.add(new PrimaryDrawerItem().withName("Cards").withIcon(R.drawable.cat_cards));
-        iDrawerItems.add(new PrimaryDrawerItem().withName("Device").withIcon(R.drawable.cat_device));
-        iDrawerItems.add(new PrimaryDrawerItem().withName("Other").withIcon(R.drawable.cat_mail));
+        iDrawerItems.add(new PrimaryDrawerItem().withName("Mail").withIcon(R.drawable.cat_mail));
+        iDrawerItems.add(new PrimaryDrawerItem().withName("Other").withIcon(R.drawable.cat_device));
+
 
         // sticky DrawItems ; footer menu items
 
@@ -223,18 +201,8 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
                 .withOnDrawerItemClickListener(this) // listener for menu items click
                 .build();
 
+
     }
-
-    /*private void showEmptyView() {
-        if (notes.size() == 0) {
-            this.recyclerView.setVisibility(View.GONE);
-            findViewById(R.id.empty_notes_view).setVisibility(View.VISIBLE);
-
-        } else {
-            this.recyclerView.setVisibility(View.VISIBLE);
-            findViewById(R.id.empty_notes_view).setVisibility(View.GONE);
-        }
-    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -259,23 +227,38 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
     @Override
     protected void onResume() {
         super.onResume();
-        showRecord();
+        showAllRecord();
     }
 
     @Override
     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
         if(position==1){
+            mRecyclerView.setAdapter(null);
+            showAllRecord();
             Toast.makeText(this, "Recent", Toast.LENGTH_SHORT).show();
-        }else if(position==2){
+        }else if(position==2){;
+            mRecyclerView.setAdapter(null);
+            showFilterData(1);
             Toast.makeText(this, "Social", Toast.LENGTH_SHORT).show();
         }else if(position==3){
+            mRecyclerView.setAdapter(null);
+            showFilterData(2);
             Toast.makeText(this, "Website", Toast.LENGTH_SHORT).show();
         }else if(position==4){
+            mRecyclerView.setAdapter(null);
+            showFilterData(3);
             Toast.makeText(this, "Cards", Toast.LENGTH_SHORT).show();
         }else if(position==5){
+            mRecyclerView.setAdapter(null);
+            showFilterData(4);
             Toast.makeText(this, "Device", Toast.LENGTH_SHORT).show();
         }else if(position==6){
+            mRecyclerView.setAdapter(null);
+            showFilterData(5);
             Toast.makeText(this, "Other", Toast.LENGTH_SHORT).show();
+        }else {
+            mRecyclerView.setAdapter(null);
+            showAllRecord();
         }
         return false;
     }

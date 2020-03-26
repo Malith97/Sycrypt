@@ -1,20 +1,28 @@
 package com.synnlabz.sycryptr;
 
 public class Model {
-    String id,accountname , accountusername , accountpassword , accounttype, updatetimestamp;
+    long id;
+    int accounttype;
+    String accountname , accountusername , accountpassword , updatetimestamp , accountlink;
 
-    public Model(String id, String accountname, String accountusername, String accountpassword) {
-        this.id = id;
+    public Model(){
+
+    }
+
+    public Model(String accountname, String accountusername, String accountpassword , String accountlink , int accounttype) {
         this.accountname = accountname;
         this.accountusername = accountusername;
         this.accountpassword = accountpassword;
+        this.accountlink = accountlink;
+        this.accounttype = accounttype;
+        this.updatetimestamp = updatetimestamp;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -42,12 +50,20 @@ public class Model {
         this.accountpassword = accountpassword;
     }
 
-    public String getAccounttype() {
+    public int getAccounttype() {
         return accounttype;
     }
 
-    public void setAccounttype(String accounttype) {
+    public void setAccounttype(int accounttype) {
         this.accounttype = accounttype;
+    }
+
+    public String getAccountlink() {
+        return accountlink;
+    }
+
+    public void setAccountlink(String accountlink) {
+        this.accountlink = accountlink;
     }
 
     public String getUpdatetimestamp() {
