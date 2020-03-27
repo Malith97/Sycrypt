@@ -3,13 +3,10 @@ package com.synnlabz.sycryptr;
 import android.app.ActionBar;
 import android.app.TaskStackBuilder;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
+import android.icu.text.BidiClassifier;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,7 +15,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -40,7 +36,7 @@ import io.codetail.animation.SupportAnimator;
 import io.codetail.animation.ViewAnimationUtils;
 
 
-public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerItemClickListener {
+public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerItemClickListener{
     private static final String TAG = "MainActivity";
     private int chackedCount = 0;
     private FloatingActionButton fab;
@@ -183,9 +179,9 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
                 .addProfiles(new ProfileDrawerItem()
                         .withEmail("SynnLabz@gmail.com")
                         .withName("Malith Ileperuma")
-                        .withIcon(R.mipmap.ic_launcher_round))
+                        .withIcon(R.drawable.propic))
                 .withSavedInstance(savedInstanceState)
-                .withHeaderBackground(R.drawable.ic_launcher_background)
+                .withHeaderBackground(R.drawable.headerback)
                 .withSelectionListEnabledForSingleProfile(false) // we need just one profile
                 .build();
 
@@ -217,6 +213,8 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(MainActivity.this, LoginDialog.class);
+            startActivity(intent);
             return true;
         }
 

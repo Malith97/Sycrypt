@@ -1,12 +1,26 @@
 package com.synnlabz.sycryptr;
 
+import android.content.Context;
+
 public class Model {
+
+    private Context context;
     long id;
+    private OnDecryptedListener onDecryptedListener;
     int accounttype;
     String accountname , accountusername , accountpassword , updatetimestamp , accountlink;
 
     public Model(){
 
+    }
+
+    public Model(Context context, OnDecryptedListener onDecryptedListener) {
+        this.context = context;
+        this.onDecryptedListener = onDecryptedListener;
+    }
+
+    public interface OnDecryptedListener {
+        void onDecrypted(String account, String passwd);
     }
 
     public Model(String accountname, String accountusername, String accountpassword , String accountlink , int accounttype) {

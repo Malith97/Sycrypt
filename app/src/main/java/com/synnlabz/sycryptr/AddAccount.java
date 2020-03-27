@@ -107,4 +107,11 @@ public class AddAccount extends AppCompatActivity  {
         mItemList.add(new TypeItem("Cards", R.drawable.cat_cards));
         mItemList.add(new TypeItem("Mail", R.drawable.cat_mail));
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(AddAccount.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

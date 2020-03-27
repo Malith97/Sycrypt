@@ -48,5 +48,17 @@ public class ViewAccount extends AppCompatActivity {
     }
 
     public void backToHome(View view) {
+        Intent intent = new Intent(ViewAccount.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ViewAccount.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 }

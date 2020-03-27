@@ -51,6 +51,12 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
         context.startActivity(i);
     }
 
+    private void askPassword(long accountId){
+        Intent i = new Intent(context, LoginDialog.class);
+        i.putExtra("ACCOUNT_ID", accountId);
+        context.startActivity(i);
+    }
+
     private void goToEditAccount(long accountId){
         Intent i = new Intent(context, EditAccount.class);
         i.putExtra("ACCOUNT_ID", accountId);
@@ -74,8 +80,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
 
         holder.ViewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View itemView) {
-                goToViewAccount(model.getId());
+            public void onClick(final View itemView) {
+                askPassword(model.getId());
+                //goToViewAccount(model.getId());
             }
         });
 
