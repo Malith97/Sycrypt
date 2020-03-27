@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,21 +44,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
         }
     }
 
-    private void goToViewAccount(long accountId){
-        Intent i = new Intent(context, ViewAccount.class);
-        i.putExtra("ACCOUNT_ID", accountId);
-        context.startActivity(i);
-    }
-
-    private void askPassword(long accountId){
+    private void askPassword(long accountId , int option){
         Intent i = new Intent(context, LoginDialog.class);
         i.putExtra("ACCOUNT_ID", accountId);
-        context.startActivity(i);
-    }
-
-    private void goToEditAccount(long accountId){
-        Intent i = new Intent(context, EditAccount.class);
-        i.putExtra("ACCOUNT_ID", accountId);
+        i.putExtra("OPTION",option);
         context.startActivity(i);
     }
 
@@ -81,7 +69,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
         holder.ViewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View itemView) {
-                askPassword(model.getId());
+                int option = 1;
+                askPassword(model.getId(),option);
                 //goToViewAccount(model.getId());
             }
         });
@@ -89,7 +78,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
         holder.EditBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View itemView) {
-                goToEditAccount(model.getId());
+                int option = 2;
+                askPassword(model.getId(),option);
+                //goToEditAccount(model.getId());
             }
         });
 

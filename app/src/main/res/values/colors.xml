@@ -11,5 +11,7 @@
     <color name="two">#283747</color>
     <color name="three">#273746</color>
 
+    <color name="iconColor">#ECF0F1</color>
+
     <color name="transparent">#00000000</color>
 </resources>

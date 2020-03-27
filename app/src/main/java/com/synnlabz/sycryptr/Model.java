@@ -5,10 +5,10 @@ import android.content.Context;
 public class Model {
 
     private Context context;
-    long id;
+    long id , updatetimestamp;
     private OnDecryptedListener onDecryptedListener;
     int accounttype;
-    String accountname , accountusername , accountpassword , updatetimestamp , accountlink;
+    String accountname , accountusername , accountpassword  , accountlink;
 
     public Model(){
 
@@ -23,7 +23,7 @@ public class Model {
         void onDecrypted(String account, String passwd);
     }
 
-    public Model(String accountname, String accountusername, String accountpassword , String accountlink , int accounttype) {
+    public Model(String accountname, String accountusername, String accountpassword , String accountlink , int accounttype , long updatetimestamp) {
         this.accountname = accountname;
         this.accountusername = accountusername;
         this.accountpassword = accountpassword;
@@ -80,11 +80,11 @@ public class Model {
         this.accountlink = accountlink;
     }
 
-    public String getUpdatetimestamp() {
+    public long getUpdatetimestamp() {
         return updatetimestamp;
     }
 
-    public void setUpdatetimestamp(String updatetimestamp) {
+    public void setUpdatetimestamp(long updatetimestamp) {
         this.updatetimestamp = updatetimestamp;
     }
 }

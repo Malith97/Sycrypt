@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class EditAccount extends AppCompatActivity {
 
@@ -26,6 +27,8 @@ public class EditAccount extends AppCompatActivity {
     AppCompatButton Save;
 
     private DatabaseHelper databaseHelper;
+
+    int spinnerposition;
 
     private long accountId;
 
@@ -62,19 +65,28 @@ public class EditAccount extends AppCompatActivity {
         AccountName.setText(model.getAccountname());
         Username.setText(model.getAccountusername());
         Password.setText(model.getAccountpassword());
+
         Weblink.setText(model.getAccountlink());
+        spinnerposition = model.getAccounttype();
 
         spinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                TypeItem clickedItem = (TypeItem) parent.getItemAtPosition(position);
+            public void onItemSelected(AdapterView<?> parent, View view, int spinnerposition, long id) {
+                TypeItem clickedItem = (TypeItem) parent.getItemAtPosition(spinnerposition);
                 String TypeName = clickedItem.getTypeName();
-                Toast.makeText(EditAccount.this, TypeName + " selected", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(EditAccount.this, TypeName + " selected", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+
+        spinnerType.post(new Runnable() {
+            @Override
+            public void run() {
+                spinnerType.setSelection(spinnerposition);
             }
         });
 
@@ -87,13 +99,15 @@ public class EditAccount extends AppCompatActivity {
     }
 
     private void updateData() {
+        Calendar calendar = Calendar.getInstance();
         String accountname = AccountName.getText().toString();
         String accountusername = Username.getText().toString();
         String accountpassword = Password.getText().toString();
         String accountweblink = Weblink.getText().toString();
         int accounttype = spinnerType.getSelectedItemPosition();
+        long timestamp = calendar.getTimeInMillis();
 
-        Model updateAccount = new Model(accountname, accountusername, accountpassword, accountweblink, accounttype);
+        Model updateAccount = new Model(accountname, accountusername, accountpassword, accountweblink, accounttype , timestamp);
 
         databaseHelper.updateAccountRecord(accountId, this, updateAccount);
 
@@ -104,14 +118,26 @@ public class EditAccount extends AppCompatActivity {
 
     private void initList() {
         mItemList = new ArrayList<>();
-        mItemList.add(new TypeItem("Other", R.drawable.cat_device));
-        mItemList.add(new TypeItem("Social", R.drawable.cat_social));
-        mItemList.add(new TypeItem("Website", R.drawable.cat_website));
-        mItemList.add(new TypeItem("Cards", R.drawable.cat_cards));
-        mItemList.add(new TypeItem("Mail", R.drawable.cat_mail));
+        mItemList.add(new TypeItem("Other", R.drawable.ic_other));
+        mItemList.add(new TypeItem("Social", R.drawable.ic_social));
+        mItemList.add(new TypeItem("Website", R.drawable.ic_web));
+        mItemList.add(new TypeItem("Cards", R.drawable.ic_card));
+        mItemList.add(new TypeItem("Mail", R.drawable.ic_mail));
 
     }
 
     public void backToHome(View view) {
+        Intent intent = new Intent(EditAccount.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(EditAccount.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 }

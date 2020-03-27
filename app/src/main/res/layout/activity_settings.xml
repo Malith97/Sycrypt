@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Settings">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bike_img" />
+
+    </FrameLayout>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@null"
+        app:popupTheme="@style/AppTheme.PopupOverlay">
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:onClick="backToHome"
+            android:background="@color/transparent"
+            android:fontFamily="@font/regular"
+            android:textColor="@color/white"
+            android:src="@drawable/ic_back"/>
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar">
+
+        <androidx.cardview.widget.CardView
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:elevation="10dp"
+            app:cardCornerRadius="15dp"
+            app:cardUseCompatPadding="true"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Settings"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textSize="30dp"
+                    android:fontFamily="@font/regular"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="5dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Security"
+                    android:textStyle="bold"
+                    android:textColor="@color/accent"
+                    android:textSize="15dp"
+                    android:fontFamily="@font/regular"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="5dp"/>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/resetPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="     Change Master Password"
+                    android:background="@drawable/button_color_state"
+                    android:drawableLeft="@drawable/ic_key"
+                    android:fontFamily="@font/regular"
+                    android:gravity="left|center_vertical"
+                    android:textStyle="bold"
+                    android:textAllCaps="false"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginLeft="15dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Backup"
+                    android:textStyle="bold"
+                    android:textColor="@color/accent"
+                    android:textSize="15dp"
+                    android:fontFamily="@font/regular"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="5dp"/>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/exportDatabase"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="     Export Database"
+                    android:background="@drawable/button_color_state"
+                    android:drawableLeft="@drawable/ic_export"
+                    android:fontFamily="@font/regular"
+                    android:gravity="left|center_vertical"
+                    android:textStyle="bold"
+                    android:textAllCaps="false"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginLeft="15dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="About Us"
+                    android:textStyle="bold"
+                    android:textColor="@color/accent"
+                    android:textSize="15dp"
+                    android:fontFamily="@font/regular"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="5dp"/>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/about"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="     About SyCryptr"
+                    android:background="@drawable/button_color_state"
+                    android:drawableLeft="@drawable/ic_info"
+                    android:fontFamily="@font/regular"
+                    android:gravity="left|center_vertical"
+                    android:textStyle="bold"
+                    android:textAllCaps="false"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginLeft="15dp"/>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+</RelativeLayout>

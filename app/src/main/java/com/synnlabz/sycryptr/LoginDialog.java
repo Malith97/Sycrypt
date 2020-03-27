@@ -20,6 +20,7 @@ public class LoginDialog extends AppCompatActivity {
     private Context context;
 
     private long accountId;
+    private int option;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class LoginDialog extends AppCompatActivity {
         try {
             //get intent to get account id
             accountId = getIntent().getLongExtra("ACCOUNT_ID", 1);
+            option = getIntent().getIntExtra("OPTION",0);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -48,14 +50,26 @@ public class LoginDialog extends AppCompatActivity {
                 String password = Password.getText().toString();
                 String checkLogin = databaseHelper.checkpassword(password);
 
-                if (checkLogin!=null){
-                    Toast.makeText(getApplicationContext(),"Login is Successfull",Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(getBaseContext(), ViewAccount.class);
-                    i.putExtra("ACCOUNT_ID", accountId);
-                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    getBaseContext().startActivity(i);
-                }else{
-                    Toast.makeText(getApplicationContext(),"Login is Failed",Toast.LENGTH_SHORT).show();
+                if (option==1){
+                    if (checkLogin!=null){
+                        Toast.makeText(getApplicationContext(),"Login is Successfull",Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(getBaseContext(), ViewAccount.class);
+                        i.putExtra("ACCOUNT_ID", accountId);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        getBaseContext().startActivity(i);
+                    }else{
+                        Toast.makeText(getApplicationContext(),"Login is Failed",Toast.LENGTH_SHORT).show();
+                    }
+                }else if (option==2){
+                    if (checkLogin!=null){
+                        Toast.makeText(getApplicationContext(),"Login is Successfull",Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(getBaseContext(), EditAccount.class);
+                        i.putExtra("ACCOUNT_ID", accountId);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        getBaseContext().startActivity(i);
+                    }else{
+                        Toast.makeText(getApplicationContext(),"Login is Failed",Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });

@@ -38,160 +38,193 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.cardview.widget.CardView
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:elevation="10dp"
-        app:cardCornerRadius="15dp"
-        app:cardUseCompatPadding="true"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp">
-        <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar">
+
+        <androidx.cardview.widget.CardView
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/accountName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Account Name"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:textSize="30dp"
-                    android:fontFamily="@font/regular"
-                    android:layout_marginTop="15dp"/>
-
-            </LinearLayout>
-
-
-
+            app:elevation="10dp"
+            app:cardCornerRadius="15dp"
+            app:cardUseCompatPadding="true"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Username"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:textSize="20dp"
-                    android:fontFamily="@font/regular"
-                    android:layout_marginTop="15dp"/>
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/account_username"
+                    <TextView
+                        android:id="@+id/accountName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Account Name"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:textSize="30dp"
+                        android:fontFamily="@font/regular"
+                        android:layout_marginTop="15dp"/>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="  Username"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:drawableLeft="@drawable/ic_username"
+                        android:textSize="20dp"
+                        android:fontFamily="@font/regular"
+                        android:layout_marginTop="15dp"/>
+
+                    <TextView
+                        android:id="@+id/account_username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="mileperuma@gmail.com"
+                        android:textColor="@color/black"
+                        android:textSize="20dp"
+                        android:layout_marginLeft="35dp"
+                        android:fontFamily="@font/regular"
+                        android:layout_marginTop="4dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="  Password"
+                        android:drawableLeft="@drawable/ic_key"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:textSize="20dp"
+                        android:fontFamily="@font/regular"
+                        android:layout_marginTop="15dp"/>
+
+                    <TextView
+                        android:id="@+id/account_password"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="icuic4uicu"
+                        android:textColor="@color/black"
+                        android:textSize="20dp"
+                        android:layout_marginLeft="35dp"
+                        android:fontFamily="@font/regular"
+                        android:layout_marginTop="4dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="  Account Link"
+                        android:drawableLeft="@drawable/ic_link"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:textSize="20dp"
+                        android:fontFamily="@font/regular"
+                        android:layout_marginTop="15dp"/>
+
+                    <TextView
+                        android:id="@+id/account_link"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="www.facebook.com"
+                        android:textColor="@color/black"
+                        android:textSize="20dp"
+                        android:layout_marginLeft="35dp"
+                        android:fontFamily="@font/regular"
+                        android:layout_marginTop="4dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="mileperuma@gmail.com"
-                    android:textColor="@color/black"
-                    android:textSize="20dp"
-                    android:layout_marginLeft="15dp"
-                    android:fontFamily="@font/regular"
-                    android:layout_marginTop="4dp"/>
+                    android:layout_marginStart="10dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/btnlink"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/round_btn"
+                        android:src="@drawable/ic_up"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp"
+                    android:layout_gravity="end">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Last accessed - "
+                        android:textStyle="bold"
+                        android:textSize="9dp"
+                        android:textColor="#B3B6B7"
+                        android:fontFamily="@font/regular"
+                        android:layout_marginTop="15dp"/>
+
+                    <TextView
+                        android:id="@+id/account_access"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2020-03-25 at 8:50"
+                        android:textStyle="bold"
+                        android:textColor="#B3B6B7"
+                        android:textSize="9dp"
+                        android:fontFamily="@font/regular"
+                        android:layout_marginTop="15dp"/>
+
+                </LinearLayout>
+
 
             </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Password"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:textSize="20dp"
-                    android:fontFamily="@font/regular"
-                    android:layout_marginTop="15dp"/>
+    </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/account_password"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="icuic4uicu"
-                    android:textColor="@color/black"
-                    android:textSize="20dp"
-                    android:layout_marginLeft="15dp"
-                    android:fontFamily="@font/regular"
-                    android:layout_marginTop="4dp"/>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Account Link"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:textSize="20dp"
-                    android:fontFamily="@font/regular"
-                    android:layout_marginTop="15dp"/>
-
-                <TextView
-                    android:id="@+id/account_link"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="www.facebook.com"
-                    android:textColor="@color/black"
-                    android:textSize="20dp"
-                    android:layout_marginLeft="15dp"
-                    android:fontFamily="@font/regular"
-                    android:layout_marginTop="4dp"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="10dp"
-                android:layout_gravity="end">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Last Accessed "
-                    android:textStyle="bold"
-                    android:textSize="10dp"
-                    android:fontFamily="@font/regular"
-                    android:layout_marginTop="15dp"/>
-
-                <TextView
-                    android:id="@+id/account_access"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Last Accessed "
-                    android:textStyle="bold"
-                    android:textSize="10dp"
-                    android:fontFamily="@font/regular"
-                    android:layout_marginTop="15dp"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
 
 
 

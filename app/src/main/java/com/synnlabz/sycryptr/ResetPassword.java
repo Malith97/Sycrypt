@@ -13,6 +13,7 @@ import android.widget.Toast;
 import de.greenrobot.event.EventBus;
 
 public class ResetPassword extends AppCompatActivity {
+
     DatabaseHelper databaseHelper;
 
     EditText Password , Repassword;
@@ -21,7 +22,7 @@ public class ResetPassword extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registration);
+        setContentView(R.layout.activity_reset_password);
 
         databaseHelper = new DatabaseHelper(this);
 

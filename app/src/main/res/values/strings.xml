@@ -36,4 +36,8 @@
 
     <string name="password_dont_match">Password don\'t match !</string>
     <string name="password_is_too_short">Password is too Short!</string>
+
+    <string name="about">SyCryptr is an offline password manager which allows you to save your usernames and passwords</string>
+    <string name="conditions">Installation and usage of the software is at users own risk.The user is responsible for any possible data loss.</string>
+    <string name="privacypolicy">Malith Ileperuma developed and published this software. This software does not collect , use or share any personal information of you or your stored data</string>
 </resources>

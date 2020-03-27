@@ -5,11 +5,11 @@ import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.icu.text.BidiClassifier;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
@@ -38,11 +38,10 @@ import io.codetail.animation.ViewAnimationUtils;
 
 public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerItemClickListener{
     private static final String TAG = "MainActivity";
-    private int chackedCount = 0;
     private FloatingActionButton fab;
     private SharedPreferences settings;
     public static final String THEME_Key = "app_theme";
-    public static final String APP_PREFERENCES="notepad_settings";
+    public static final String APP_PREFERENCES="sycryptr_settings";
     private int theme;
     private String filter = "";
 
@@ -57,6 +56,8 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
         settings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         theme = settings.getInt(THEME_Key, R.style.AppTheme);
         setTheme(theme);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -135,13 +136,12 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
     private void setupNavigation(Bundle savedInstanceState, Toolbar toolbar) {
         // Navigation menu items
         List<IDrawerItem> iDrawerItems = new ArrayList<>();
-        iDrawerItems.add(new PrimaryDrawerItem().withName("Recent").withIcon(R.drawable.cat_recent));
-        iDrawerItems.add(new PrimaryDrawerItem().withName("Social").withIcon(R.drawable.cat_social));
-        iDrawerItems.add(new PrimaryDrawerItem().withName("Website").withIcon(R.drawable.cat_website));
-        iDrawerItems.add(new PrimaryDrawerItem().withName("Cards").withIcon(R.drawable.cat_cards));
-        iDrawerItems.add(new PrimaryDrawerItem().withName("Mail").withIcon(R.drawable.cat_mail));
-        iDrawerItems.add(new PrimaryDrawerItem().withName("Other").withIcon(R.drawable.cat_device));
-
+        iDrawerItems.add(new PrimaryDrawerItem().withName("Recent").withIcon(R.drawable.ic_all));
+        iDrawerItems.add(new PrimaryDrawerItem().withName("Social").withIcon(R.drawable.ic_social));
+        iDrawerItems.add(new PrimaryDrawerItem().withName("Website").withIcon(R.drawable.ic_web));
+        iDrawerItems.add(new PrimaryDrawerItem().withName("Cards").withIcon(R.drawable.ic_card));
+        iDrawerItems.add(new PrimaryDrawerItem().withName("Mail").withIcon(R.drawable.ic_mail));
+        iDrawerItems.add(new PrimaryDrawerItem().withName("Other").withIcon(R.drawable.ic_other));
 
         // sticky DrawItems ; footer menu items
 
@@ -171,7 +171,20 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
                     }
                 });
 
-        stockyItems.add(new PrimaryDrawerItem().withName("Settings").withIcon(R.drawable.ic_settings));
+        PrimaryDrawerItem primaryDrawerItem = new PrimaryDrawerItem()
+                .withName("Settings")
+                .withIcon(R.drawable.ic_settings)
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        Intent intent = new Intent(MainActivity.this, Settings.class);
+                        startActivity(intent);
+                        finish();
+                        return true;
+                    }
+                });
+
+        stockyItems.add(primaryDrawerItem);
         stockyItems.add(switchDrawerItem);
 
         // navigation menu header
@@ -249,7 +262,7 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
         }else if(position==5){
             mRecyclerView.setAdapter(null);
             showFilterData(4);
-            Toast.makeText(this, "Device", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Mail", Toast.LENGTH_SHORT).show();
         }else if(position==6){
             mRecyclerView.setAdapter(null);
             showFilterData(5);

@@ -38,116 +38,168 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.cardview.widget.CardView
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:elevation="10dp"
-        app:cardCornerRadius="15dp"
-        app:cardUseCompatPadding="true"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp">
-        <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar">
+
+        <androidx.cardview.widget.CardView
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp">
+            app:elevation="10dp"
+            app:cardCornerRadius="15dp"
+            app:cardUseCompatPadding="true"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Add Account"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:textSize="30dp"
-                android:fontFamily="@font/regular"
-                android:layout_margin="13dp"/>
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="50dp"
-                android:layout_marginBottom="6dp"
-                android:hint="Account Name">
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/accountname"
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="Add Account"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textSize="30dp"
                     android:fontFamily="@font/regular"
-                    android:minHeight="50dp" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="50dp"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="6dp"
-                android:hint="Username">
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/accountusername"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/regular"
-                    android:minHeight="50dp"
-                    android:inputType="text"
-                    android:importantForAccessibility="no" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="50dp"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="6dp"
-                android:hint="Password">
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/accountpassword"
+                    android:layout_margin="13dp"/>
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="50dp"
-                    android:inputType="text"
-                    android:fontFamily="@font/regular"
-                    android:importantForAccessibility="no" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:hint="Account Name">
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/accountname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/regular"
+                        android:maxLines="1"
+                        android:minHeight="50dp" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="50dp"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="6dp"
-                android:hint="Website Link">
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/accountlink"
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="50dp"
-                    android:inputType="text"
+                    android:hint="Username">
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/accountusername"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/regular"
+                        android:minHeight="50dp"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:importantForAccessibility="no" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="50dp"
+                    android:layout_marginBottom="6dp"
+                    android:hint="Password">
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/accountpassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="50dp"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:maxLength="25"
+                        android:fontFamily="@font/regular"
+                        android:importantForAccessibility="no" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="7">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:minHeight="50dp"
+                        android:layout_weight="5"
+                        android:hint="Generate Password">
+                        <TextView
+                            android:id="@+id/viewPass"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:minHeight="50dp"
+                            android:text="Password Generator"
+                            android:textSize="18dp"
+                            android:fontFamily="@font/regular"
+                            android:importantForAccessibility="no" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <ImageButton
+                        android:id="@+id/copyBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_copy"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:background="@color/transparent"/>
+
+                    <ImageButton
+                        android:id="@+id/generateBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_generate"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:background="@color/transparent"/>
+
+                </LinearLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="50dp"
+                    android:hint="Account Login Link">
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/accountlink"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="50dp"
+                        android:inputType="text"
+                        android:fontFamily="@font/regular"
+                        android:importantForAccessibility="no" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/account_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"/>
+
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Add Account"
                     android:fontFamily="@font/regular"
-                    android:importantForAccessibility="no" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:textStyle="bold"
+                    android:layout_marginBottom="15dp"
+                    android:id="@+id/save"/>
 
-            <androidx.appcompat.widget.AppCompatSpinner
-                android:id="@+id/account_type"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_marginLeft="2dp"
-                android:layout_marginRight="2dp"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Add Account"
-                android:fontFamily="@font/regular"
-                android:textStyle="bold"
-                android:layout_marginBottom="15dp"
-                android:id="@+id/save"/>
+    </RelativeLayout>
 
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+
 
 
 

@@ -24,7 +24,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String table1 = "CREATE TABLE "+TABLE1+"('id' INTEGER PRIMARY KEY,'password' TEXT NOT NULL)";
-        String table2 = "CREATE TABLE "+TABLE2+"('id' INTEGER PRIMARY KEY AUTOINCREMENT,'ac_name' TEXT,'ac_username' TEXT,'ac_password' TEXT,'ac_type' INTEGER,'ac_weblink' TEXT,'ac_timestamp' TEXT)";
+        String table2 = "CREATE TABLE "+TABLE2+"('id' INTEGER PRIMARY KEY AUTOINCREMENT,'ac_name' TEXT,'ac_username' TEXT,'ac_password' TEXT,'ac_type' INTEGER,'ac_weblink' TEXT,'ac_timestamp' LONG)";
         db.execSQL(table1);
         db.execSQL(table2);
     }
@@ -132,7 +132,8 @@ class DatabaseHelper extends SQLiteOpenHelper {
             receivedAccount.setAccountusername(cursor.getString(cursor.getColumnIndex("ac_username")));
             receivedAccount.setAccountpassword(cursor.getString(cursor.getColumnIndex("ac_password")));
             receivedAccount.setAccountlink(cursor.getString(cursor.getColumnIndex("ac_weblink")));
-            receivedAccount.setUpdatetimestamp(cursor.getString(cursor.getColumnIndex("ac_timestamp")));
+            receivedAccount.setUpdatetimestamp(cursor.getLong(cursor.getColumnIndex("ac_timestamp")));
+            receivedAccount.setAccounttype(cursor.getInt(cursor.getColumnIndex("ac_type")));
         }
         return receivedAccount;
     }
@@ -151,7 +152,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
 
     public void updateAccountRecord(long accountId, Context context, Model updateAccount) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        sqLiteDatabase.execSQL("UPDATE  "+TABLE2+" SET ac_name ='"+ updateAccount.getAccountname() + "', ac_username ='" + updateAccount.getAccountusername()+ "', ac_password ='"+ updateAccount.getAccountpassword() + "', ac_weblink ='"+ updateAccount.getAccountlink() + "', ac_type ='"+ updateAccount.getAccounttype() + "'  WHERE id='" + accountId + "'");
+        sqLiteDatabase.execSQL("UPDATE  "+TABLE2+" SET ac_name ='"+ updateAccount.getAccountname() + "', ac_username ='" + updateAccount.getAccountusername()+ "', ac_password ='"+ updateAccount.getAccountpassword() + "', ac_weblink ='"+ updateAccount.getAccountlink() + "', ac_type ='"+ updateAccount.getAccounttype() + "', ac_timestamp ='"+ updateAccount.getUpdatetimestamp() +"'  WHERE id='" + accountId + "'");
         Toast.makeText(context, "Updated successfully.", Toast.LENGTH_SHORT).show();
     }
 
