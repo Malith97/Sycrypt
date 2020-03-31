@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Calendar;
+
+import se.simbio.encryption.Encryption;
 
 public class ViewAccount extends AppCompatActivity {
 
@@ -53,8 +56,18 @@ public class ViewAccount extends AppCompatActivity {
 
         Model model = databaseHelper.getModel(accountId);
         AccountName.setText(model.getAccountname());
-        Username.setText(model.getAccountusername());
-        Password.setText(model.getAccountpassword());
+        //Username.setText(model.getAccountusername());
+        //Password.setText(model.getAccountpassword());
+
+        Encryption encryption = Encryption.getDefault("Key", "Salt", new byte[16]);
+        String userName = encryption.decryptOrNull(model.getAccountusername());
+        String passWord = encryption.decryptOrNull(model.getAccountpassword());
+
+        Toast.makeText(this, "username    -  " + userName, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "password    -  " + passWord, Toast.LENGTH_SHORT).show();
+
+        Username.setText(userName);
+        Password.setText(passWord);
 
         String url = model.getAccountlink();
 

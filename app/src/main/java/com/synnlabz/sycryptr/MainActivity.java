@@ -5,6 +5,7 @@ import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -132,16 +133,15 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
     }
 
 
-
     private void setupNavigation(Bundle savedInstanceState, Toolbar toolbar) {
         // Navigation menu items
         List<IDrawerItem> iDrawerItems = new ArrayList<>();
-        iDrawerItems.add(new PrimaryDrawerItem().withName("Recent").withIcon(R.drawable.ic_all));
-        iDrawerItems.add(new PrimaryDrawerItem().withName("Social").withIcon(R.drawable.ic_social));
-        iDrawerItems.add(new PrimaryDrawerItem().withName("Website").withIcon(R.drawable.ic_web));
-        iDrawerItems.add(new PrimaryDrawerItem().withName("Cards").withIcon(R.drawable.ic_card));
-        iDrawerItems.add(new PrimaryDrawerItem().withName("Mail").withIcon(R.drawable.ic_mail));
-        iDrawerItems.add(new PrimaryDrawerItem().withName("Other").withIcon(R.drawable.ic_other));
+        iDrawerItems.add(new PrimaryDrawerItem().withName("Recent").withIcon(R.drawable.ic_all).withTypeface(Typeface.createFromAsset(getAssets(),"bold.ttf")));
+        iDrawerItems.add(new PrimaryDrawerItem().withName("Social").withIcon(R.drawable.ic_social).withTypeface(Typeface.createFromAsset(getAssets(),"bold.ttf")));
+        iDrawerItems.add(new PrimaryDrawerItem().withName("Website").withIcon(R.drawable.ic_web).withTypeface(Typeface.createFromAsset(getAssets(),"bold.ttf")));
+        iDrawerItems.add(new PrimaryDrawerItem().withName("Cards").withIcon(R.drawable.ic_card).withTypeface(Typeface.createFromAsset(getAssets(),"bold.ttf")));
+        iDrawerItems.add(new PrimaryDrawerItem().withName("Mail").withIcon(R.drawable.ic_mail).withTypeface(Typeface.createFromAsset(getAssets(),"bold.ttf")));
+        iDrawerItems.add(new PrimaryDrawerItem().withName("Other").withIcon(R.drawable.ic_other).withTypeface(Typeface.createFromAsset(getAssets(),"bold.ttf")));
 
         // sticky DrawItems ; footer menu items
 
@@ -149,6 +149,7 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
 
         SwitchDrawerItem switchDrawerItem = new SwitchDrawerItem()
                 .withName("Dark Theme")
+                .withTypeface(Typeface.createFromAsset(getAssets(),"bold.ttf"))
                 .withChecked(theme == R.style.AppTheme_Dark)
                 .withIcon(R.drawable.ic_menu_slideshow)
                 .withOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -173,6 +174,7 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
 
         PrimaryDrawerItem primaryDrawerItem = new PrimaryDrawerItem()
                 .withName("Settings")
+                .withTypeface(Typeface.createFromAsset(getAssets(),"bold.ttf"))
                 .withIcon(R.drawable.ic_settings)
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
