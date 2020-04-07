@@ -1,4 +1,4 @@
-package com.synnlabz.sycryptr;
+package com.synnlabz.sycryptr.other;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -6,16 +6,16 @@ import androidx.appcompat.widget.AppCompatButton;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
+
+import com.synnlabz.sycryptr.MainActivity;
+import com.synnlabz.sycryptr.R;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.nio.channels.FileChannel;
 
 public class Settings extends AppCompatActivity {
@@ -41,7 +41,7 @@ public class Settings extends AppCompatActivity {
         ResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Settings.this, ResetPassword.class);
+                Intent intent = new Intent(Settings.this, com.synnlabz.sycryptr.ResetPassword.class);
                 startActivity(intent);
                 finish();
             }

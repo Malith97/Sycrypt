@@ -11,6 +11,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
 
+import com.synnlabz.sycryptr.account.EditAccount;
+import com.synnlabz.sycryptr.account.ViewAccount;
+import com.synnlabz.sycryptr.database.DatabaseHelper;
+import com.synnlabz.sycryptr.other.Model;
+
 public class LoginDialog extends AppCompatActivity {
 
     private AppCompatEditText Password;
@@ -52,7 +57,6 @@ public class LoginDialog extends AppCompatActivity {
 
                 if (option==1){
                     if (checkLogin!=null){
-                        Toast.makeText(getApplicationContext(),"Login is Successfull",Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(getBaseContext(), ViewAccount.class);
                         i.putExtra("ACCOUNT_ID", accountId);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -62,7 +66,6 @@ public class LoginDialog extends AppCompatActivity {
                     }
                 }else if (option==2){
                     if (checkLogin!=null){
-                        Toast.makeText(getApplicationContext(),"Login is Successfull",Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(getBaseContext(), EditAccount.class);
                         i.putExtra("ACCOUNT_ID", accountId);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

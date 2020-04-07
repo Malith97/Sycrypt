@@ -1,19 +1,18 @@
-package com.synnlabz.sycryptr;
+package com.synnlabz.sycryptr.other;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.StrictMode;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
+import com.synnlabz.sycryptr.R;
 
 import java.io.File;
 

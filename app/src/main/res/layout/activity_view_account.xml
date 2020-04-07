@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ViewAccount">
+    tools:context=".account.ViewAccount">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/bike_img" />
+            android:src="@color/colorPrimary" />
 
     </FrameLayout>
 
@@ -51,8 +51,8 @@
             app:elevation="10dp"
             app:cardCornerRadius="15dp"
             app:cardUseCompatPadding="true"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp">
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -82,18 +82,16 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="  Username"
-                        android:textStyle="bold"
+                        android:text="  username"
                         android:textColor="@color/black"
                         android:drawableLeft="@drawable/ic_username"
                         android:textSize="20dp"
-                        android:fontFamily="@font/regular"
+                        android:fontFamily="@font/medium"
                         android:layout_marginTop="15dp"/>
 
                     <TextView
@@ -102,7 +100,7 @@
                         android:layout_height="wrap_content"
                         android:text="mileperuma@gmail.com"
                         android:textColor="@color/black"
-                        android:textSize="20dp"
+                        android:textSize="17dp"
                         android:layout_marginLeft="35dp"
                         android:fontFamily="@font/regular"
                         android:layout_marginTop="4dp"/>
@@ -112,18 +110,16 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="  Password"
+                        android:text="  password"
                         android:drawableLeft="@drawable/ic_key"
-                        android:textStyle="bold"
                         android:textColor="@color/black"
                         android:textSize="20dp"
-                        android:fontFamily="@font/regular"
+                        android:fontFamily="@font/medium"
                         android:layout_marginTop="15dp"/>
 
                     <TextView
@@ -132,7 +128,7 @@
                         android:layout_height="wrap_content"
                         android:text="icuic4uicu"
                         android:textColor="@color/black"
-                        android:textSize="20dp"
+                        android:textSize="17dp"
                         android:layout_marginLeft="35dp"
                         android:fontFamily="@font/regular"
                         android:layout_marginTop="4dp"/>
@@ -142,18 +138,16 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="  Account Link"
+                        android:text="  account link"
                         android:drawableLeft="@drawable/ic_link"
-                        android:textStyle="bold"
                         android:textColor="@color/black"
                         android:textSize="20dp"
-                        android:fontFamily="@font/regular"
+                        android:fontFamily="@font/medium"
                         android:layout_marginTop="15dp"/>
 
                     <TextView
@@ -162,7 +156,7 @@
                         android:layout_height="wrap_content"
                         android:text="www.facebook.com"
                         android:textColor="@color/black"
-                        android:textSize="20dp"
+                        android:textSize="17dp"
                         android:layout_marginLeft="35dp"
                         android:fontFamily="@font/regular"
                         android:layout_marginTop="4dp"/>

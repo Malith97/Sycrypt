@@ -29,6 +29,11 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.synnlabz.sycryptr.account.AddAccount;
+import com.synnlabz.sycryptr.database.DatabaseHelper;
+import com.synnlabz.sycryptr.other.Model;
+import com.synnlabz.sycryptr.other.Settings;
+import com.synnlabz.sycryptr.adapters.Adapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
     ActionBar actionBar;
     private RecyclerView mRecyclerView;
     private ArrayList<Model> arrayList;
-    private Adapter Adapter;
+    private com.synnlabz.sycryptr.adapters.Adapter Adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -226,13 +231,6 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            Intent intent = new Intent(MainActivity.this, LoginDialog.class);
-            startActivity(intent);
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -279,6 +277,11 @@ public class MainActivity extends AppCompatActivity implements Drawer.OnDrawerIt
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        //nothing
     }
 }
 

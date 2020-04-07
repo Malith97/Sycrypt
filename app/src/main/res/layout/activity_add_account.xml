@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddAccount">
+    tools:context=".account.AddAccount">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/bike_img" />
+            android:src="@color/colorPrimary" />
 
     </FrameLayout>
 
@@ -45,7 +45,9 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true">
 
             <androidx.cardview.widget.CardView
                 android:layout_centerHorizontal="true"
@@ -55,8 +57,8 @@
                 app:elevation="10dp"
                 app:cardCornerRadius="15dp"
                 app:cardUseCompatPadding="true"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp">
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -73,7 +75,9 @@
                         android:textColor="@color/black"
                         android:textSize="30dp"
                         android:fontFamily="@font/regular"
-                        android:layout_margin="13dp"/>
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="10dp"/>
+
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -184,88 +188,16 @@
                     <androidx.appcompat.widget.AppCompatSpinner
                         android:id="@+id/account_type"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="60dp"
                         android:layout_marginLeft="2dp"
                         android:layout_marginRight="2dp"/>
-
-
-                    <!--<com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:minHeight="50dp"
-                        android:layout_marginBottom="6dp"
-                        android:hint="Input Text">
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/inputText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:minHeight="50dp"
-                            android:inputType="text"
-                            android:maxLines="1"
-                            android:maxLength="25"
-                            android:fontFamily="@font/regular"
-                            android:importantForAccessibility="no" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:minHeight="50dp"
-                        android:layout_marginBottom="6dp"
-                        android:hint="Password">
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/password"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:minHeight="50dp"
-                            android:inputType="text"
-                            android:maxLines="1"
-                            android:maxLength="25"
-                            android:fontFamily="@font/regular"
-                            android:importantForAccessibility="no" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:minHeight="50dp"
-                        android:layout_marginBottom="6dp"
-                        android:hint="Input Text">
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/outputText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:minHeight="50dp"
-                            android:inputType="text"
-                            android:maxLines="1"
-                            android:maxLength="25"
-                            android:fontFamily="@font/regular"
-                            android:importantForAccessibility="no" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Encrpt"
-                        android:fontFamily="@font/regular"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="15dp"
-                        android:id="@+id/encBtn"/>
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Decrypt"
-                        android:fontFamily="@font/regular"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="15dp"
-                        android:id="@+id/decBtn"/>  -->
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Add Account"
-                        android:fontFamily="@font/regular"
+                        android:fontFamily="@font/medium"
+                        android:background="@drawable/button_border"
                         android:textStyle="bold"
                         android:layout_marginBottom="15dp"
                         android:id="@+id/save"/>

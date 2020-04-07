@@ -1,19 +1,22 @@
-package com.synnlabz.sycryptr;
+package com.synnlabz.sycryptr.account;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.synnlabz.sycryptr.database.DatabaseHelper;
+import com.synnlabz.sycryptr.MainActivity;
+import com.synnlabz.sycryptr.other.Model;
+import com.synnlabz.sycryptr.R;
 
 import java.util.Calendar;
 
@@ -30,6 +33,8 @@ public class ViewAccount extends AppCompatActivity {
     private long accountId , time;
 
     private String Token;
+
+    WebView myWebView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,23 +58,17 @@ public class ViewAccount extends AppCompatActivity {
         }
 
         Calendar calendar = Calendar.getInstance();
-
-        Model model = databaseHelper.getModel(accountId);
-        AccountName.setText(model.getAccountname());
-        //Username.setText(model.getAccountusername());
-        //Password.setText(model.getAccountpassword());
-
         Encryption encryption = Encryption.getDefault("Key", "Salt", new byte[16]);
-        String userName = encryption.decryptOrNull(model.getAccountusername());
-        String passWord = encryption.decryptOrNull(model.getAccountpassword());
 
-        Toast.makeText(this, "username    -  " + userName, Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, "password    -  " + passWord, Toast.LENGTH_SHORT).show();
+        final Model model = databaseHelper.getModel(accountId);
+        AccountName.setText(model.getAccountname());
+        final String userName = encryption.decryptOrNull(model.getAccountusername());
+        final String passWord = encryption.decryptOrNull(model.getAccountpassword());
 
         Username.setText(userName);
         Password.setText(passWord);
 
-        String url = model.getAccountlink();
+        final String url = model.getAccountlink();
 
         if(url.isEmpty()){
             Weblink.setText("URL is not available");
@@ -82,8 +81,14 @@ public class ViewAccount extends AppCompatActivity {
         GoLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent("android.intent.action.VIEW", Uri.parse("http://www.facebook.com/synnlabz"));
-                startActivity(intent);
+                Encryption encryption = Encryption.getDefault("Key", "Salt", new byte[16]);
+                String userName = encryption.decryptOrNull(model.getAccountusername());
+                if (model.getAccountlink().equals("")){
+                    Toast.makeText(getApplicationContext(),"Login url is not available",Toast.LENGTH_SHORT).show();
+                }else{
+                    Intent intent = new Intent("android.intent.action.VIEW", Uri.parse("http://"+model.getAccountlink()+"/login"));
+                    startActivity(intent);
+                }
             }
         });
 

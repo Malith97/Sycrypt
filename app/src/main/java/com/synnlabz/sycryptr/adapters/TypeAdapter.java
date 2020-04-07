@@ -1,4 +1,4 @@
-package com.synnlabz.sycryptr;
+package com.synnlabz.sycryptr.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,9 +11,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.synnlabz.sycryptr.R;
+import com.synnlabz.sycryptr.other.TypeItem;
+
 import java.util.ArrayList;
 
-class TypeAdapter extends ArrayAdapter<TypeItem> {
+public class TypeAdapter extends ArrayAdapter<TypeItem> {
     public TypeAdapter(Context context, ArrayList<TypeItem> itemList) {
         super(context, 0, itemList);
     }

@@ -3,12 +3,14 @@ package com.synnlabz.sycryptr;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.synnlabz.sycryptr.database.DatabaseHelper;
+import com.synnlabz.sycryptr.other.Settings;
 
 import de.greenrobot.event.EventBus;
 
@@ -68,6 +70,8 @@ public class ResetPassword extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        Intent intent = new Intent(ResetPassword.this, Settings.class);
+        startActivity(intent);
     }
 }
 

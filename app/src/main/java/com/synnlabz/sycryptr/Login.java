@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.synnlabz.sycryptr.database.DatabaseHelper;
+
 public class Login extends AppCompatActivity {
 
     DatabaseHelper databaseHelper;

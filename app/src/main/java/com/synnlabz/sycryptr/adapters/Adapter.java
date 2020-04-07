@@ -1,4 +1,4 @@
-package com.synnlabz.sycryptr;
+package com.synnlabz.sycryptr.adapters;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,7 +15,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.synnlabz.sycryptr.database.DatabaseHelper;
+import com.synnlabz.sycryptr.LoginDialog;
+import com.synnlabz.sycryptr.other.Model;
+import com.synnlabz.sycryptr.R;
+
 import java.util.ArrayList;
+
+import se.simbio.encryption.Encryption;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
 
@@ -32,6 +40,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
         public TextView textAccountName;
         public TextView textUsername;
         public AppCompatButton ViewBtn , EditBtn , DeleteBtn;
+        public RelativeLayout View;
 
 
         public Holder(@NonNull View itemView) {
@@ -41,6 +50,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
             ViewBtn = (AppCompatButton)itemView.findViewById(R.id.btn_view);
             EditBtn = (AppCompatButton)itemView.findViewById(R.id.btn_edit);
             DeleteBtn = (AppCompatButton)itemView.findViewById(R.id.btn_delete);
+            View = (RelativeLayout)itemView.findViewById(R.id.id_item_content_expand);
         }
     }
 
@@ -62,9 +72,11 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
     @Override
     public void onBindViewHolder(@NonNull final Holder holder, final int position) {
         final Model model = arrayList.get(position);
+        Encryption encryption = Encryption.getDefault("Key", "Salt", new byte[16]);
+        String userName = encryption.decryptOrNull(model.getAccountusername());
 
         holder.textAccountName.setText(model.getAccountname());
-        holder.textUsername.setText(model.getAccountusername());
+        holder.textUsername.setText(userName);
 
         holder.ViewBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,4 +1,4 @@
-package com.synnlabz.sycryptr;
+package com.synnlabz.sycryptr.other;
 
 public class TypeItem {
     private String mItemName;

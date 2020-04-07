@@ -15,17 +15,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".About"></activity>
-        <activity android:name=".Settings" />
+        <activity android:name=".other.About"></activity>
+        <activity android:name=".other.Settings" />
         <activity android:name=".ResetPassword" />
-        <activity android:name=".EditAccount" />
+        <activity android:name=".account.EditAccount" />
         <activity
             android:name=".LoginDialog"
             android:screenOrientation="portrait"
             android:theme="@style/AppCompatAlertDialogStyle"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity android:name=".ViewAccount" />
-        <activity android:name=".AddAccount" />
+        <activity android:name=".account.ViewAccount" />
+        <activity android:name=".account.AddAccount" />
         <activity android:name=".Login" />
         <activity
             android:name=".Registration"
@@ -47,6 +47,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
+
     </application>
+
 
 </manifest>

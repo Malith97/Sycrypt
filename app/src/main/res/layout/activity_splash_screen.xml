@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="#f8f7f3"
     tools:context=".SplashScreen">
 
     <LinearLayout
@@ -18,12 +18,11 @@
         <ImageView
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/sycryptrlogo"/>
+            android:src="@drawable/lock2"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:text="Sy"
             android:textSize="35dp"
             android:layout_gravity="center"
@@ -42,34 +41,5 @@
             android:textColor="#154360"/>
 
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="5dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="15dp"
-            android:text="Powered By"
-            android:fontFamily="@font/regular"
-            android:layout_marginEnd="5dp"
-            android:textColor="#212A51"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Synn~Labz"
-            android:textSize="15dp"
-            android:fontFamily="@font/regular"
-            android:textColor="#616161"/>
-
-    </LinearLayout>
-
-
 
 </RelativeLayout>

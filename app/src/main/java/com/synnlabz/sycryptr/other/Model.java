@@ -1,4 +1,4 @@
-package com.synnlabz.sycryptr;
+package com.synnlabz.sycryptr.other;
 
 import android.content.Context;
 

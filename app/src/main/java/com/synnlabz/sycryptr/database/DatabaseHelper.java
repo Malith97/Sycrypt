@@ -1,23 +1,24 @@
-package com.synnlabz.sycryptr;
+package com.synnlabz.sycryptr.database;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.provider.SyncStateContract;
 import android.widget.Toast;
+
+import com.synnlabz.sycryptr.other.Model;
 
 import java.util.ArrayList;
 
-class DatabaseHelper extends SQLiteOpenHelper {
+public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "Sycrypter.db";
 
     private static final String TABLE1 = "ACCOUNT";
     private static final String TABLE2 = "ITEMS";
 
-    DatabaseHelper(Context context){
+    public DatabaseHelper(Context context){
         super(context,DATABASE_NAME,null,1);
     }
 

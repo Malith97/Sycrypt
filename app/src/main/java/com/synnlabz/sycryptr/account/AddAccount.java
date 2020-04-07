@@ -1,26 +1,25 @@
-package com.synnlabz.sycryptr;
+package com.synnlabz.sycryptr.account;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatSpinner;
-import androidx.appcompat.widget.AppCompatTextView;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.synnlabz.sycryptr.database.DatabaseHelper;
+import com.synnlabz.sycryptr.MainActivity;
+import com.synnlabz.sycryptr.R;
+import com.synnlabz.sycryptr.other.TypeItem;
+import com.synnlabz.sycryptr.adapters.TypeAdapter;
 
 import java.security.MessageDigest;
 import java.text.DateFormat;
@@ -44,12 +43,9 @@ public class AddAccount extends AppCompatActivity  {
     private DatabaseHelper databaseHelper;
 
     AppCompatEditText AccountName , Username , Password , Weblink;
-    AppCompatEditText inputText , inputPassword;
-    TextView ViewPass , outputText;
+    TextView ViewPass;
     ImageButton GeneratePass , CopyBtn;
-    AppCompatButton  encBtn , decBtn;
     Button Save;
-    String outputString;
     String AES = "AES";
 
     @Override
@@ -60,40 +56,6 @@ public class AddAccount extends AppCompatActivity  {
         initList();
 
         databaseHelper = new DatabaseHelper(this);
-
-        //inputText = (AppCompatEditText)findViewById(R.id.inputText);
-        //inputPassword = (AppCompatEditText)findViewById(R.id.password);
-        //outputText = (AppCompatTextView)findViewById(R.id.outputText);
-        //encBtn = (AppCompatButton)findViewById(R.id.encBtn);
-        //decBtn = (AppCompatButton)findViewById(R.id.decBtn);
-
-        /*
-        encBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    String Username = inputText.getText().toString();
-                    String Password = inputText.getText().toString();
-                    outputString = encrypt(Username,Password);
-                    outputText.setText(outputString);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        decBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    outputString = decrypt(outputString,inputPassword.getText().toString());
-                    outputText.setText(outputString);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-
-            }
-        });*/
 
         AccountName = (AppCompatEditText)findViewById(R.id.accountname);
         Username = (AppCompatEditText)findViewById(R.id.accountusername);
@@ -202,7 +164,7 @@ public class AddAccount extends AppCompatActivity  {
                 ""+timestamp
         );
 
-        startActivity(new Intent(AddAccount.this,MainActivity.class));
+        startActivity(new Intent(AddAccount.this, MainActivity.class));
         Toast.makeText(this, "Records Added Successfull", Toast.LENGTH_SHORT).show();
     }
 

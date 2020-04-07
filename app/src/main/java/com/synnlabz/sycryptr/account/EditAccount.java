@@ -1,20 +1,27 @@
-package com.synnlabz.sycryptr;
+package com.synnlabz.sycryptr.account;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatSpinner;
 
-import android.accounts.Account;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.Toast;
+
+import com.synnlabz.sycryptr.database.DatabaseHelper;
+import com.synnlabz.sycryptr.MainActivity;
+import com.synnlabz.sycryptr.other.Model;
+import com.synnlabz.sycryptr.R;
+import com.synnlabz.sycryptr.other.TypeItem;
+import com.synnlabz.sycryptr.adapters.TypeAdapter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import se.simbio.encryption.Encryption;
 
 public class EditAccount extends AppCompatActivity {
 
@@ -37,8 +44,6 @@ public class EditAccount extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_account);
 
-        initList();
-
         databaseHelper = new DatabaseHelper(this);
 
         AccountName = (AppCompatEditText)findViewById(R.id.accountname);
@@ -51,20 +56,23 @@ public class EditAccount extends AppCompatActivity {
         spinnerType = (AppCompatSpinner) findViewById(R.id.account_type);
         spinnerType.setPrompt("Select Type");
 
+        initList();
+
         mAdapter = new TypeAdapter(this, mItemList);
         spinnerType.setAdapter(mAdapter);
 
         try {
-            //get intent to get account id
             accountId = getIntent().getLongExtra("ACCOUNT_ID", 1);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+        Encryption encryption = Encryption.getDefault("Key", "Salt", new byte[16]);
+
         Model model = databaseHelper.getModel(accountId);
         AccountName.setText(model.getAccountname());
-        Username.setText(model.getAccountusername());
-        Password.setText(model.getAccountpassword());
+        Username.setText(encryption.decryptOrNull(model.getAccountusername()));
+        Password.setText(encryption.decryptOrNull(model.getAccountpassword()));
 
         Weblink.setText(model.getAccountlink());
         spinnerposition = model.getAccounttype();
@@ -100,9 +108,10 @@ public class EditAccount extends AppCompatActivity {
 
     private void updateData() {
         Calendar calendar = Calendar.getInstance();
+        Encryption encryption = Encryption.getDefault("Key", "Salt", new byte[16]);
         String accountname = AccountName.getText().toString();
-        String accountusername = Username.getText().toString();
-        String accountpassword = Password.getText().toString();
+        String accountusername = encryption.encryptOrNull(Username.getText().toString());
+        String accountpassword = encryption.encryptOrNull(Password.getText().toString());
         String accountweblink = Weblink.getText().toString();
         int accounttype = spinnerType.getSelectedItemPosition();
         long timestamp = calendar.getTimeInMillis();
@@ -111,7 +120,7 @@ public class EditAccount extends AppCompatActivity {
 
         databaseHelper.updateAccountRecord(accountId, this, updateAccount);
 
-        startActivity(new Intent(EditAccount.this,MainActivity.class));
+        startActivity(new Intent(EditAccount.this, MainActivity.class));
         finish();
         Toast.makeText(this, "Records Added Successfull", Toast.LENGTH_SHORT).show();
     }
